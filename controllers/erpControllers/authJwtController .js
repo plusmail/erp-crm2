@@ -79,7 +79,9 @@ exports.login = async (req, res) => {
 
 exports.isValidAdminToken = async (req, res, next) => {
   try {
-    const token = req.cookies.token;
+    console.log("11111111->",req.headers.cookie )
+
+    const token = req.headers.cookie;
 
     if (!token)
       return res.status(401).json({

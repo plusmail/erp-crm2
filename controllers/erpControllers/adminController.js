@@ -9,6 +9,7 @@ const getOne = require('../corsControllers/custom').getOne;
  */
 
 exports.list = async (req, res) => {
+  // console.log("list->", req);
   const page = req.query.page || 1;
   const limit = parseInt(req.query.items) || 10;
   const skip = page * limit - limit;
@@ -24,16 +25,21 @@ exports.list = async (req, res) => {
     // Resolving both promises
     const [result, count] = await Promise.all([resultsPromise, countPromise]);
     // Calculating total pages
+
     const pages = Math.ceil(count / limit);
 
     // Getting Pagination Object
     const pagination = { page, pages, count };
+
+    // console.log("222222->", pages, "-", result, "-", pagination, "-", count);
+
     if (count > 0) {
       for (let admin of result) {
         admin.password = undefined;
         admin.customMenu = undefined;
         admin.permissions = undefined;
       }
+      console.log("3333333333333333", result.token);
       return res.status(200).json({
         success: true,
         result,
@@ -41,6 +47,8 @@ exports.list = async (req, res) => {
         message: 'Successfully found all documents',
       });
     } else {
+      console.log("4444444444444444444");
+
       return res.status(203).json({
         success: false,
         result: [],

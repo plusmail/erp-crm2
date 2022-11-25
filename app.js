@@ -3,6 +3,7 @@ const express = require('express');
 const helmet = require('helmet');
 const path = require('path');
 const cors = require('cors');
+const session = require('session');
 
 const cookieParser = require('cookie-parser');
 require('dotenv').config({ path: '.variables.env' });
